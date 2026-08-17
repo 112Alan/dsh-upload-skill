@@ -1,6 +1,6 @@
 ---
 name: dsh-upload-media
-description: Handle user-uploaded images and files in a DSH (DeepSeek Harness) session — file uploads via the dsh-upload-plugin HTTP channel, image understanding via the describe-image vision tool, and background/theme image application for the DSH web GUI. Use when the user uploads an image or file, asks to inspect/transcribe/understand an image, or wants to apply an uploaded image as a GUI background.
+description: Set up and handle user-uploaded images and files in a DSH (DeepSeek Harness) session — one-click deployment of the floating upload button + file/image upload channels + vision configuration, file uploads via the dsh-upload-plugin HTTP channel, image understanding via the describe-image vision tool, and background/theme image application for the DSH web GUI. Use when the user uploads an image or file, asks to inspect/transcribe/understand an image, wants to set up the upload feature on a new machine, or wants to apply an uploaded image as a GUI background.
 ---
 
 # DSH Upload & Media Handling
@@ -8,6 +8,44 @@ description: Handle user-uploaded images and files in a DSH (DeepSeek Harness) s
 Handle everything a user can throw at the session through uploads: files landing on the host via the
 upload channel, images that arrive as attachment references, and images meant to replace the GUI
 background. The two plugins below are independent; this skill coordinates both.
+
+## One-click deployment (new machine)
+
+When the user asks to "set up uploads like the reference machine", or simply wants the upload
+feature installed, follow this checklist to reproduce the full stack: the floating "＋" upload
+button, file uploads, image uploads, and AI image understanding.
+
+1. **Fetch the plugins** into a stable local path (e.g. `D:\dsh-upload-entry` and
+   `D:\dsh-upload-plugin`):
+   - Upload entry plugin (floating "＋" button — short-press opens the upload image/file menu,
+     long-press drags the button, position remembered in `localStorage`):
+     `https://raw.githubusercontent.com/112Alan/dsh-upload-skill/main/plugins/dsh-upload-entry/lib/index.js`
+   - File-upload channel plugin:
+     `https://raw.githubusercontent.com/112Alan/dsh-upload-skill/main/plugins/dsh-upload-plugin/lib/index.js`
+2. **Mount both plugins** in the web profile patch `~/.dsh/profiles/web/cordis.patch.yml`:
+   ```yaml
+   - insert:
+       - id: dsh-upload-entry
+         name: 'file:///D:/dsh-upload-entry/lib/index.js'
+       - id: dsh-upload
+         name: 'file:///D:/dsh-upload-plugin/lib/index.js'
+   ```
+3. **Configure the vision model** so the AI can read images (`~/.dsh/settings.yaml`):
+   ```yaml
+   describe-image:
+     baseURL: https://open.bigmodel.cn/api/paas/v4
+     model: glm-4v-flash
+     apiKey: <your-zhipu-api-key>
+     apiStyle: chat-completions
+   ```
+   If the user has no vision key, skip this step — file uploads and the floating button still work;
+   only AI image reading will fail with a clear message (report this to the user).
+4. **Restart dsh web** (or let the watchdog restart it), then verify:
+   - Open `http://127.0.0.1:3080` — a black "＋" button appears bottom-right; short-press opens
+     📷 上传图片 / 📎 上传文件; long-press drags it.
+   - Test one file upload and one image upload end-to-end.
+5. **Report** to the user: button present? uploads working? image reading working (or the no-vision
+   caveat)?
 
 ## The two upload surfaces
 
