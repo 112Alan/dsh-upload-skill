@@ -1,0 +1,8 @@
+{
+  "name": "dsh-upload-entry",
+  "version": "1.0.0",
+  "description": "DSH web 上传入口插件：右下角悬浮「＋」，短按弹出上传图片/文件菜单，长按拖动换位置；图片走 attachment store，文件落盘。",
+  "type": "module",
+  "main": "lib/index.js",
+  "license": "MIT"
+}

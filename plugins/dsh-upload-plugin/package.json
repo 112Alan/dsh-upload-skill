@@ -1,0 +1,8 @@
+{
+  "name": "dsh-upload-plugin",
+  "version": "1.0.0",
+  "description": "手机文件上传通道：POST /dsh-upload 保存文件到本地目录，返回路径",
+  "type": "module",
+  "main": "lib/index.js",
+  "license": "MIT"
+}
