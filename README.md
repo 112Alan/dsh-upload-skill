@@ -10,10 +10,11 @@ DSH（DeepSeek Harness）技能：处理用户上传的图片和文件——文�
 > https://raw.githubusercontent.com/112Alan/dsh-upload-skill/main/skills/dsh-upload-media/SKILL.md
 >
 > 这是"DSH 上传图片和文件"技能，包含一键部署步骤。请：
-> 1. 按里面的「一键部署」章节，把我的 DSH 配置成完整的上传环境（右下角黑色"＋"按钮 + 文件上传 + 图片上传 + AI 读图）
-> 2. 需要的插件从同一仓库的 plugins/ 目录下载
-> 3. 视觉模型的 apiKey 如果没有，先跳过并告诉我
-> 4. 配置完成后测试并汇报结果
+> 1. 先检查 describe-image 插件（来自 @linxin666/dsh-web-ui-all 全家桶）是否已安装——没有就先装，否则图片发出去不会显示、AI 也读不了
+> 2. 按里面的「一键部署」章节，把我的 DSH 配置成完整的上传环境（右下角黑色"＋"按钮 + 文件上传 + 图片上传 + AI 读图）
+> 3. 需要的插件从同一仓库的 plugins/ 目录下载
+> 4. 视觉模型的 apiKey 如果没有，先跳过并告诉我
+> 5. 配置完成后测试并汇报结果
 
 ## 仓库内容
 

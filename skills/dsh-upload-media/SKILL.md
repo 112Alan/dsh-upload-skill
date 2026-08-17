@@ -11,7 +11,12 @@ description: 在 DSH（DeepSeek Harness）会话中部署并处理用户上传�
 
 当用户要求"像参考机一样配置上传功能"、或只是想要安装上传功能时，按下面的清单复刻完整能力：悬浮"＋"上传按钮、文件上传、图片上传、以及 AI 读图。
 
-1. **下载插件**到本机稳定路径（例如 `D:\dsh-upload-entry` 和 `D:\dsh-upload-plugin`）：
+1. **前置依赖：describe-image 插件（图片显示与 AI 读图的前提）**。
+   它来自 `@linxin666/dsh-web-ui-all` 全家桶。先检查是否已安装：
+   - 已安装（`describe_image` 工具在 `Tool.listTools` 里、`/describe-image/raw` 路由可访问）→ 继续。
+   - 未安装 → 先装全家桶：`dsh plugin --profile web add @linxin666/dsh-web-ui-all`（或让用户确认）。
+   - 跳过此步的后果：图片能上传，但会话里只显示 markdown 引用文本（不渲染成图），AI 也读不了图——文件上传和按钮不受影响。
+2. **下载插件**到本机稳定路径（例如 `D:\dsh-upload-entry` 和 `D:\dsh-upload-plugin`）：
    - 上传入口插件（悬浮"＋"按钮——短按弹出上传图片/文件菜单，长按拖动按钮，位置记忆在 `localStorage`）：
      `https://raw.githubusercontent.com/112Alan/dsh-upload-skill/main/plugins/dsh-upload-entry/lib/index.js`
    - 文件上传通道插件：
@@ -46,10 +51,11 @@ description: 在 DSH（DeepSeek Harness）会话中部署并处理用户上传�
 > https://raw.githubusercontent.com/112Alan/dsh-upload-skill/main/skills/dsh-upload-media/SKILL.md
 >
 > 这是"DSH 上传图片和文件"技能，包含一键部署步骤。请：
-> 1. 按里面的「一键部署」章节，把我的 DSH 配置成完整的上传环境（右下角黑色"＋"按钮 + 文件上传 + 图片上传 + AI 读图）
-> 2. 需要的插件从同一仓库的 plugins/ 目录下载
-> 3. 视觉模型的 apiKey 如果没有，先跳过并告诉我
-> 4. 配置完成后测试并汇报结果
+> 1. 先检查 describe-image 插件（来自 @linxin666/dsh-web-ui-all 全家桶）是否已安装——没有就先装，否则图片发出去不会显示、AI 也读不了
+> 2. 按里面的「一键部署」章节，把我的 DSH 配置成完整的上传环境（右下角黑色"＋"按钮 + 文件上传 + 图片上传 + AI 读图）
+> 3. 需要的插件从同一仓库的 plugins/ 目录下载
+> 4. 视觉模型的 apiKey 如果没有，先跳过并告诉我
+> 5. 配置完成后测试并汇报结果
 
 ## 两个上传通道
 
